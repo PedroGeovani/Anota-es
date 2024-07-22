@@ -1,29 +1,66 @@
-<template>  
-  <div :style="divStyle" class="bg-no-repeat bg-scroll bg-cover bg-center min-h-screen">
+<template>
+  <div
+    :style="divStyle"
+    class="bg-no-repeat bg-scroll bg-cover bg-center min-h-screen"
+  >
     <div class="bg-gradient-to-r from-black to-transparent h-screen">
-      <div class="flex flex-col p-4 md:flex-row md:gap-8 md:p-6 lg:gap-16 lg:p-16">
+      <div
+        v-if="details.videos?.results[0].key !== undefined"
+        class="flex flex-col p-4 md:flex-row md:gap-8 md:p-6 lg:gap-16 lg:p-16"
+      >
         <div>
-          <div class="text-[32px] font-extrabold text-white md:text-[40px] lg:text-[48px]">
+          <div
+            class="text-[32px] font-extrabold text-white md:text-[40px] lg:text-[48px]"
+          >
             {{ details.name }}
+          </div>
+          <div
+            class="card flex justify-start text-blue-400">
+            <ButtonFavorite 
+              :start-favorite="favorite"
+              :text-is-favorite="'Esta Favoritado'"
+              :text-not-favorite="'Ainda não favoritado'" 
+              @favorite="status"/>
           </div>
           <div class="text-[16px] text-white md:text-[18px] lg:text-[24px]">
             <a> {{ details.first_air_date?.split("-")[0] }} | </a>
-            <a style="color : rgb(20,120,0);"> {{ details.number_of_episodes }} episódios </a>
-            <p> popularidade: {{ details.popularity }} </p>
-            <br />
+            <a style="color: rgb(20, 120, 0)">
+              {{ details.number_of_episodes }} episódios
+            </a>
+            <p>popularidade: {{ details.popularity }}</p>
+            <br />            
           </div>
-          <div class="text-[16px] text-white text-justify md:text-[18px] lg:text-[24px]">
-            {{ details.overview }}
+          <div
+            class="text-[16px] text-white text-justify md:text-[18px] lg:text-[24px]"
+          >
+            {{ details.overview }} <br />
+          </div>          
+        </div>
+        <div>
+          <div
+            class="flex justify-center m-4 md:mx-8 md:my-32 lg:mx-16 lg:my-44 lg:scale-125"
+          >
+            <iframe
+              class="rounded-xl transform transition duration-500 hover:scale-[1.1]"
+              width="320"
+              height="180"
+              :src="`https://www.youtube.com/embed/${details.videos?.results[0].key}`"
+              title="Apresentação"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerpolicy="strict-origin-when-cross-origin"
+              allowfullscreen
+            >
+            </iframe>
           </div>
-          <div>
-            <Button label="click"> </Button>
-          </div>            
         </div>
-        <div class="flex justify-center m-4 md:mx-8 md:my-32 lg:mx-16 lg:my-44 lg:scale-125" >
-          <iframe class=" border-2 rounded-lg" width="320" height="180" src="https://www.youtube.com/embed/LeIhfzjKPus" title="🔴 LIVE - Shaun the Sheep | Farm TV | Shaun The Sheep 🐑 Cartoons for kids, Preschool, New Stream" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-          <!--iframe class=" border-2 rounded-lg " :src="`https://image.tmdb.org/t/p/w342${details[id]?.poster_path}`" title="Moana Official Trailer -> details.title" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe-->
-        </div>
-
+      </div>
+      <div
+        v-else
+        class="text-[48px] text-center text-blue-950 p-[150px] flex justify-center min-h-screen"
+      >
+        Desculpe! <br />
+        Pagina Não Encontrada
       </div>
     </div>
   </div>
